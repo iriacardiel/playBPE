@@ -11,11 +11,13 @@ corpus_test = "not spoken aloud in centuries" #"not spoken aloud in centuries"
 # BASIC TOKENIZER 
 tokenizer = BasicTokenizer()
 tokenizer.train(text=corpus_train, vocab_size=vocab_size, verbose=False)
+tokenizer.save("basic")
 for token in tokenizer.encode(corpus_test):
     print(colored(f"{str(token).ljust(3)} | {tokenizer.decode([token])}", "red"))
 
 # REGEX TOKENIZER 
 tokenizer = RegexTokenizer()
 tokenizer.train(text=corpus_train, vocab_size=vocab_size, verbose=False)
+tokenizer.save("regex")
 for token in tokenizer.encode(corpus_test):
     print(colored(f"{str(token).ljust(3)} | {tokenizer.decode([token])}", "blue"))
