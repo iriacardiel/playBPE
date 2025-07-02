@@ -15,17 +15,17 @@ Tokenizers are based on Andrej Karpathy - Let's build the GPT Tokenizer https://
 
 # Tokenizer Tester (Python Script)
 
-Run [tokenizer_tester.py](tokenizer_tester.py)
+Run [tokenizer_tester.py](scripts/tokenizer_tester.py)
 
-```python tokenizer_tester.py```
+```python scripts/tokenizer_tester.py```
 
 ![alt text](images/image1.png)
 
 # Tokenizer Visualizer (Streamlit App)
 
-Run [tokenizer_viewer.py](tokenizer_viewer.py) 
+Run [tokenizer_viewer.py](scripts/tokenizer_viewer.py)
 
-```streamlit run tokenizer_viewer.py```
+```streamlit run scripts/tokenizer_viewer.py```
 
 ![alt text](images/image2.png)
 
