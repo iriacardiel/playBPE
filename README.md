@@ -31,4 +31,4 @@ Run [tokenizer_viewer.py](scripts/tokenizer_viewer.py)
 
 Go to http://localhost:8501 in your browser.
 
-![alt text](images/image3.png)
+![alt text](images/image0.png)

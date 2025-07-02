@@ -13,8 +13,8 @@ def generate_colors(n):
     return [f"hsl({random.randint(0, 360)}, 70%, 75%)" for _ in range(n)]
 
 # --- App layout ---
-st.set_page_config(page_title="Tokenizer Visualizer", layout="wide")
-st.title("🧪 Tokenizer Visualizer")
+st.set_page_config(page_title="🧩 playBPE Tokenizer", layout="wide")
+st.title("🧩 playBPE Tokenizer")
 
 # --- Catalog of corpus files ---
 CORPUS_DIR = "corpora"
@@ -70,13 +70,13 @@ r_colors = generate_colors(len(r_tokens))
 col3, col4 = st.columns(2)
 
 with col3:
-    st.header("🔴 BasicTokenizer")
+    st.header("BasicTokenizer")
     colored_btokens = " ".join([color_token(tok, col) for tok, col in zip(b_tokens, b_colors)])
     st.markdown(colored_btokens, unsafe_allow_html=True)
     st.text_area("Token IDs", value=str(b_ids), height=100, key="basic_ids", disabled=True)
 
 with col4:
-    st.header("🔵 RegexTokenizer")
+    st.header("RegexTokenizer")
     colored_rtokens = " ".join([color_token(tok, col) for tok, col in zip(r_tokens, r_colors)])
     st.markdown(colored_rtokens, unsafe_allow_html=True)
     st.text_area("Token IDs", value=str(r_ids), height=100, key="regex_ids", disabled=True)
