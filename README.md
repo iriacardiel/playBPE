@@ -1,7 +1,9 @@
 # playBPE
-A playground to understand BPE. 
+A playground to understand BPE (Byte-Pair Encoding) Tokenization 
 
-Tokenizers are based on Andrej Karpathy - Let's build the GPT Tokenizer https://www.youtube.com/watch?v=zduSFxRajkE&t=350s
+- https://en.wikipedia.org/wiki/Byte-pair_encoding
+- https://huggingface.co/learn/llm-course/chapter6/5
+- Tokenizers are based on Andrej Karpathy - Let's build the GPT Tokenizer https://www.youtube.com/watch?v=zduSFxRajkE&t=350s
 
 ![alt text](images/image0.png)
 
