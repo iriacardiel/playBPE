@@ -250,14 +250,11 @@ class RegexTokenizer():
         """
         # default: vocab size of 256 (all bytes), no merges, no patterns
         self.merges = {} # (int, int) -> int
-        self.pattern = "" # str
-        self.special_tokens = {} # str -> int, e.g. {'<|endoftext|>': 100257}
-        self.vocab = self._build_vocab() # int -> bytes
-        
         self.pattern = GPT4_SPLIT_PATTERN if pattern is None else pattern
         self.compiled_pattern = re.compile(self.pattern)
-        self.special_tokens = {}
-        self.inverse_special_tokens = {}
+        self.special_tokens = {'<|endoftext|>': 1000}
+        self.inverse_special_tokens = {1000: '<|endoftext|>'}
+        self.vocab = self._build_vocab() # int -> bytes
 
     def train(self, text, vocab_size, verbose=False):
         assert vocab_size >= 256
@@ -350,7 +347,7 @@ class RegexTokenizer():
             ids.extend(chunk_ids)
         return ids
 
-    def encode(self, text, allowed_special="none_raise"):
+    def encode(self, text, allowed_special="all"):
         """
         Unlike encode_ordinary, this function handles special tokens.
         allowed_special: can be "all"|"none"|"none_raise" or a custom set of special tokens
