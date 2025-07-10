@@ -3,10 +3,18 @@ from termcolor import colored
 
 # If we dont train the tokenizer no compression occurs. Only unicode encode / decode.
 vocab_size = 1500
-with open("corpora/fantasy.txt", "r", encoding="utf-8") as f:
+selected_corpus = "tinyshakespeare.txt"
+with open(f"corpora/{selected_corpus}", "r", encoding="utf-8") as f:
     corpus_train = f.read()
     
-corpus_test = "not spoken aloud in centuries" #"not spoken aloud in centuries"
+# THE LONGER THE TEXT THE BETTER THE TOKENIZER BUT LONGER THE TRAINING TIME
+text_to_tokenize = {
+                "fantasy.txt":" The wind rose suddenly, as if exhaling a secret.", # SHORT
+                "science-fiction.txt":" Even the androids moved slower", # SHORT
+                "tinyshakespeare.txt" : " It is a truth universally acknowledged" # LONG
+                }
+    
+corpus_test = text_to_tokenize.get(selected_corpus)
 
 # BASIC TOKENIZER 
 tokenizer = BasicBPETokenizer()

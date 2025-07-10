@@ -2,6 +2,7 @@
 import unicodedata
 from termcolor import colored
 import regex as re
+from tqdm import trange
 
 # -----------------------------------------------------------------------------
 # Helper functions (useful for both BasicBPETokenizer and RegexBPETokenizer)
@@ -88,8 +89,7 @@ class BasicBPETokenizer:
         # iteratively merge the most common pairs to create new tokens
         merges = {} # (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)} # int -> bytes
-        for i in range(num_merges):
-            print(f"BasicBPETokenizer Training merge {i+1}/{num_merges}...") 
+        for i in trange(num_merges, desc="BasicBPETokenizer Training", disable=False):
             # count up the number of times every consecutive pair appears
             stats = get_stats(ids)
             if not stats:
@@ -240,7 +240,7 @@ class RegexBPETokenizer():
         self.inverse_special_tokens = {100257: '<|endoftext|>'}
         self.vocab = self._build_vocab() # int -> bytes
 
-    def train(self, text, vocab_size, verbose=False):
+    def train(self, text, vocab_size, verbose=True):
         assert vocab_size >= 256
         num_merges = vocab_size - 256
 
@@ -253,8 +253,7 @@ class RegexBPETokenizer():
         # iteratively merge the most common pairs to create new tokens
         merges = {} # (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)} # idx -> bytes
-        for i in range(num_merges):
-            print(f"RegexBPETokenizer Training merge {i+1}/{num_merges}...") 
+        for i in trange(num_merges, desc="RegexBPETokenizer Training", disable=False):
 
             # count the number of times every consecutive pair appears
             stats = {}
