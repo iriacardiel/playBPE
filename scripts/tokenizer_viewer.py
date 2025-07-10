@@ -1,8 +1,10 @@
 import streamlit as st
-from tokenizers import BasicTokenizer, RegexTokenizer
+from tokenizers import BasicBPETokenizer, RegexBPETokenizer
 import os
 import random
+from termcolor import colored
 
+# TODO: Block page during training to avoid multiple training at the same time.
 # --- Helper functions ---
 
 def color_token(token, color):
@@ -26,7 +28,8 @@ corpus_files = [f for f in os.listdir(CORPUS_DIR) if f.endswith(".txt")]
 
 text_to_tokenize = {
                 "fantasy.txt":" The wind rose suddenly, as if exhaling a secret.",
-                "science-fiction.txt":" Even the androids moved slower"
+                "science-fiction.txt":" Even the androids moved slower",
+                "tinyshakespeare.txt" : " It is a truth universally acknowledged"
                 }
 
 col1, col2 = st.columns(2)
@@ -50,14 +53,15 @@ with col2:
 # Choose vocabulary size
 vocab_size = st.slider("📏 Select vocabulary size:", min_value=256, max_value=5000, value=1500, step=30)
 
-
 # --- Train tokenizers ---
-btok = BasicTokenizer()
+btok = BasicBPETokenizer()
+print(colored("Training BasicBPETokenizer...", "blue"))
 btok.train(text=corpus_train, vocab_size=vocab_size, verbose=False)
 b_ids = btok.encode(corpus_test)
 b_tokens = [btok.decode([i]) for i in b_ids]
 
-rtok = RegexTokenizer()
+rtok = RegexBPETokenizer()
+print(colored("Training BasicBPETokenizer...", "blue"))
 rtok.train(text=corpus_train, vocab_size=vocab_size, verbose=False)
 r_ids = rtok.encode(corpus_test)
 r_tokens = [rtok.decode([i]) for i in r_ids]
@@ -70,13 +74,13 @@ r_colors = generate_colors(len(r_tokens))
 col3, col4 = st.columns(2)
 
 with col3:
-    st.header("BasicTokenizer")
+    st.header("BasicBPETokenizer")
     colored_btokens = " ".join([color_token(tok, col) for tok, col in zip(b_tokens, b_colors)])
     st.markdown(colored_btokens, unsafe_allow_html=True)
     st.text_area("Token IDs", value=str(b_ids), height=100, key="basic_ids", disabled=True)
 
 with col4:
-    st.header("RegexTokenizer")
+    st.header("RegexBPETokenizer")
     colored_rtokens = " ".join([color_token(tok, col) for tok, col in zip(r_tokens, r_colors)])
     st.markdown(colored_rtokens, unsafe_allow_html=True)
     st.text_area("Token IDs", value=str(r_ids), height=100, key="regex_ids", disabled=True)

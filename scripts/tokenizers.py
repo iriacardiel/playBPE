@@ -4,7 +4,7 @@ from termcolor import colored
 import regex as re
 
 # -----------------------------------------------------------------------------
-# Helper functions (useful for both BasicTokenizer and RegexTokenizer)
+# Helper functions (useful for both BasicBPETokenizer and RegexBPETokenizer)
 
 def get_stats(ids, counts=None):
     """
@@ -60,7 +60,7 @@ def render_token(t: bytes) -> str:
 # -----------------------------------------------------------------------------
 # the Tokenizer class
 
-class BasicTokenizer:
+class BasicBPETokenizer:
     """
     Minimal (byte-level) Byte Pair Encoding tokenizer.
 
@@ -89,6 +89,7 @@ class BasicTokenizer:
         merges = {} # (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)} # int -> bytes
         for i in range(num_merges):
+            print(f"BasicBPETokenizer Training merge {i+1}/{num_merges}...") 
             # count up the number of times every consecutive pair appears
             stats = get_stats(ids)
             if not stats:
@@ -213,16 +214,16 @@ GPT4_SPLIT_PATTERN = r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1
 
 
 
-class RegexTokenizer():
+class RegexBPETokenizer():
     """
     Minimal (byte-level) Byte Pair Encoding tokenizer.
 
     Algorithmically follows along the GPT tokenizer:
     https://github.com/openai/gpt-2/blob/master/src/encoder.py
 
-    Unlike BasicTokenizer:
-    - RegexTokenizer handles an optional regex splitting pattern.
-    - RegexTokenizer handles optional special tokens.
+    Unlike BasicBPETokenizer:
+    - RegexBPETokenizer handles an optional regex splitting pattern.
+    - RegexBPETokenizer handles optional special tokens.
     """
 
     def __init__(self, pattern=None):
@@ -253,6 +254,8 @@ class RegexTokenizer():
         merges = {} # (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)} # idx -> bytes
         for i in range(num_merges):
+            print(f"RegexBPETokenizer Training merge {i+1}/{num_merges}...") 
+
             # count the number of times every consecutive pair appears
             stats = {}
             for chunk_ids in ids:
