@@ -1,4 +1,4 @@
-from tokenizers import BasicBPETokenizer, RegexBPETokenizer
+from scripts.tokenizers_module import BasicBPETokenizer, RegexBPETokenizer
 from termcolor import colored
 
 # If we dont train the tokenizer no compression occurs. Only unicode encode / decode.

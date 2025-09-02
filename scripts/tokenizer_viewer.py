@@ -1,5 +1,5 @@
 import streamlit as st
-from tokenizers import BasicBPETokenizer, RegexBPETokenizer
+from scripts.tokenizers_module import BasicBPETokenizer, RegexBPETokenizer
 import os
 import random
 from termcolor import colored
